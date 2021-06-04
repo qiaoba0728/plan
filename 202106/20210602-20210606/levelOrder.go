@@ -66,3 +66,25 @@ func flatten(root *plan.TreeNode) *plan.TreeNode {
 	p.Right = right
 	return root
 }
+
+//给定一个不含重复元素的数组，构造最大二叉树
+func constructMaximumBinaryTree(nums []int) *plan.TreeNode {
+	if len(nums) == 0 {
+		return nil
+	}
+	max, index := nums[0], -1
+	for i := 0; i < len(nums); i++ {
+		if nums[i] > max {
+			max = nums[i]
+			index = i
+		}
+	}
+	node := &plan.TreeNode{
+		Val:   index,
+		Left:  nil,
+		Right: nil,
+	}
+	node.Left = constructMaximumBinaryTree(nums[:index])
+	node.Right = constructMaximumBinaryTree(nums[index+1:])
+	return node
+}
