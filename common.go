@@ -11,3 +11,7 @@ type ConnectTreeNode struct {
 	Right *ConnectTreeNode
 	Next  *ConnectTreeNode
 }
+type Linked struct {
+	Val  int
+	Next *Linked
+}
