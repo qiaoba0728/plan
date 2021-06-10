@@ -1,6 +1,9 @@
 package _0210607_20210614
 
-import "strings"
+import (
+	"plan"
+	"strings"
+)
 
 //给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效
 func isValid(s string) bool {
@@ -38,4 +41,32 @@ func reverseWords(s string) string {
 		}
 	}
 	return strings.Join(res, " ")
+}
+
+//给定一个二叉树，返回其节点值自底向上的层序遍历。 （即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历）
+func levelOrderBottom(root *plan.TreeNode) [][]int {
+	res := make([][]int, 0)
+	process(root, &res, 0)
+	left, right := 0, len(res)-1
+	for left < right {
+		temp := res[left]
+		res[left] = res[right]
+		res[right] = temp
+		left++
+		right--
+	}
+	return res
+}
+
+func process(root *plan.TreeNode, res *[][]int, level int) {
+	if root == nil {
+		return
+	}
+	if len(*res) > level {
+		(*res)[level] = append((*res)[level], root.Val)
+	} else {
+		*res = append(*res, []int{root.Val})
+	}
+	process(root.Left, res, level+1)
+	process(root.Right, res, level+1)
 }
