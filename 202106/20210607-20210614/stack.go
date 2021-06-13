@@ -70,3 +70,31 @@ func process(root *plan.TreeNode, res *[][]int, level int) {
 	process(root.Left, res, level+1)
 	process(root.Right, res, level+1)
 }
+
+//todo
+//给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度
+func lengthOfLongestSubstring(s string) int {
+	cnt := len(s)
+	if cnt == 0 {
+		return 0
+	}
+
+	tempMap := make(map[uint8]int)
+	l, r, maxLen := 0, 1, 1
+	tempMap[s[l]] = l
+	for l < r && r < cnt {
+		val, ok := tempMap[s[r]]
+		if ok && val >= l {
+			l = val + 1
+		}
+
+		if r-l+1 > maxLen {
+			maxLen = r - l + 1
+		}
+
+		tempMap[s[r]] = r
+		r++
+	}
+
+	return maxLen
+}
